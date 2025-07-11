@@ -23,15 +23,15 @@ This is a free and open-source **Telegram bot** that automatically:
 ## 🚄 Deployment (Free on Railway)
 
 > 📌 You don't need a credit card. Follow these steps:
->
-> Go to https://railway.app
-> Sign up and log in (no credit card required)
 
-Click on New Project → Deploy from GitHub Repo
-
-Select your forked repo
-
-Railway will automatically detect and build your bot
+- Go to https://railway.app
+- Sign up and log in (no credit card required)
+- Click on New Project → Deploy from GitHub Repo
+- Select your forked repo
+- Set the environment variables:
+-  TELEGRAM_BOT_TOKEN
+-  OPENROUTER_API_KEY
+- Railway will automatically detect and build your bot
 
 ✅ Once deployed, your bot starts running automatically and handles messages in real-time!
 
