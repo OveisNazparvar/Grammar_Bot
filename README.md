@@ -29,8 +29,8 @@ This is a free and open-source **Telegram bot** that automatically:
 - Click on New Project → Deploy from GitHub Repo
 - Select your forked repo
 - Set the environment variables:
--  TELEGRAM_BOT_TOKEN
--  OPENROUTER_API_KEY
+  - TELEGRAM_BOT_TOKEN
+  - OPENROUTER_API_KEY
 - Railway will automatically detect and build your bot
 
 ✅ Once deployed, your bot starts running automatically and handles messages in real-time!
@@ -43,7 +43,7 @@ Click the "Fork" button on the top right, or clone this repo:
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/telegram-grammar-bot.git
-
+‍‍‍```
 ---
 
 ## 🤖 Usage
