@@ -1,9 +1,0 @@
-name: grammar-bot
-services:
-  - name: bot
-    type: worker
-    buildCommand: pip install -r requirements.txt
-    startCommand: python3 main.py
-    env:
-      - name: OPENROUTER_API_KEY
-      - name: BOT_TOKEN
