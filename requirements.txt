@@ -1,0 +1,5 @@
+python-telegram-bot==20.6
+faster-whisper==0.10.0
+Flask==2.3.3
+requests
+ffmpeg-python
