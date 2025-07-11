@@ -82,4 +82,4 @@ Let’s make grammar correction easier for everyone — one message at a time!
 
 ---
 
-**License**: [MIT](LICENSE)
+**License**: [ GNU GENERAL PUBLIC LICENSE](LICENSE)
