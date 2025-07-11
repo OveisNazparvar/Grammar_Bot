@@ -1,12 +1,9 @@
 name: grammar-bot
-
 services:
   - name: bot
-    type: web
+    type: worker
     buildCommand: pip install -r requirements.txt
     startCommand: python3 main.py
     env:
       - name: OPENROUTER_API_KEY
-      - name: BOT_TOKEN
-    ports:
-      - 8080
+      - name: TELEGRAM_BOT_TOKEN
