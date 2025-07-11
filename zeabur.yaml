@@ -1,8 +1,12 @@
-name: your-project-name
+name: grammar-bot
+
 services:
-  - name: web
-    image: python:3.10
-    command: python3 main.py
+  - name: bot
+    type: web
+    buildCommand: pip install -r requirements.txt
+    startCommand: python3 main.py
+    env:
+      - name: OPENROUTER_API_KEY
+      - name: TELEGRAM_BOT_TOKEN
     ports:
-      - port: 8080
-        expose: true
+      - 8080
