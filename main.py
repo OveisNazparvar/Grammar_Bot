@@ -9,30 +9,20 @@ from threading import Thread
 
 # ========== 🔐 API Keys ==========
 API_KEY = os.environ.get("OPENROUTER_API_KEY")
-BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
-
 if not API_KEY:
     raise ValueError("❌ 'OPENROUTER_API_KEY' is missing from environment variables!")
+
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
 if not BOT_TOKEN:
-    raise ValueError("❌ 'TELEGRAM_BOT_TOKEN' is missing from environment variables!")
+    raise ValueError("❌ 'BOT_TOKEN' is missing from environment variables!")
 
 # ========== 🧠 Whisper Model ==========
 whisper_model = WhisperModel("small.en", compute_type="int8")
 
-# ========== 🤖 Telegram Bot ==========
-app = ApplicationBuilder().token(BOT_TOKEN).build()
+# ========== 🤖 Initialize Telegram Bot ==========
+telegram_app = ApplicationBuilder().token(BOT_TOKEN).build()
 
-# ========== 💬 Flask App for Uptimerobot ==========
-flask_app = Flask(__name__)
-
-@flask_app.route("/")
-def home():
-    return "✅ Bot is alive!", 200
-
-def run_flask():
-    flask_app.run(host="0.0.0.0", port=8080)
-
-# ========== 🧠 Ask OpenRouter ==========
+# ========== 🧾 Send Prompt to OpenRouter ==========
 def ask_openrouter(prompt: str) -> str:
     response = requests.post(
         "https://openrouter.ai/api/v1/chat/completions",
@@ -52,7 +42,7 @@ def ask_openrouter(prompt: str) -> str:
     else:
         raise RuntimeError(f"❌ OpenRouter Error:\n{response.text}")
 
-# ========== 🎙️ Voice Handler ==========
+# ========== 🎙️ Handle Voice Messages ==========
 async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
     voice = update.message.voice
     if not voice:
@@ -76,8 +66,8 @@ async def handle_voice(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         await update.message.reply_text(f"📝 Text Extracted:\n{text}")
 
-        # Grammar check
-        feedback_prompt = f"""
+        try:
+            feedback_prompt = f"""
 Please check the following English text for grammar mistakes.
 List all the issues clearly with short explanations and suggestions.
 Then provide the corrected version of the full text.
@@ -87,20 +77,20 @@ Separate grammar and suggestions with a clear line.
 Text:
 {text}
 """
-        feedback = ask_openrouter(feedback_prompt)
-        await update.message.reply_text(
-            f"🧠 Grammar Feedback:\n{feedback}",
-            reply_to_message_id=message_id
-        )
+            feedback = ask_openrouter(feedback_prompt)
+            await update.message.reply_text(
+                f"🧠 Grammar Feedback:\n{feedback}",
+                reply_to_message_id=message_id
+            )
+        except Exception as e:
+            await update.message.reply_text(f"❌ Error during grammar feedback:\n{e}")
 
-    except Exception as e:
-        await update.message.reply_text(f"❌ Error:\n{e}")
     finally:
         for path in [ogg_path, wav_path]:
             if os.path.exists(path):
                 os.remove(path)
 
-# ========== ✍️ Text Handler ==========
+# ========== 💬 Handle Text Messages ==========
 async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_text = update.message.text
     message_id = update.message.message_id
@@ -110,20 +100,34 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     try:
         reply = ask_openrouter(user_text)
-        await update.message.reply_text(reply, reply_to_message_id=message_id)
+        await update.message.reply_text(
+            reply,
+            reply_to_message_id=message_id
+        )
     except Exception as e:
         await update.message.reply_text(f"❌ Error from OpenRouter:\n{e}")
 
 # ========== 🔧 Register Handlers ==========
-app.add_handler(MessageHandler(filters.VOICE, handle_voice))
-app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), handle_text))
+telegram_app.add_handler(MessageHandler(filters.VOICE, handle_voice))
+telegram_app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), handle_text))
 
-# ========== 🚀 Start Everything ==========
+# ========== 🌐 Flask App for UptimeRobot ==========
+flask_app = Flask(__name__)
+
+@flask_app.route("/")
+def home():
+    return "Bot is running! ✅", 200
+
+# ========== 🧵 Run Telegram Bot & Flask in parallel ==========
+def run_telegram_bot():
+    telegram_app.run_polling()
+
+def run_flask():
+    port = int(os.environ.get("PORT", 5000))
+    flask_app.run(host="0.0.0.0", port=port)
+
 if __name__ == "__main__":
-    print("🤖 Bot is running with OpenRouter (Voice + Text)...")
-
-    # Start Flask in background
+    # Run Flask in a thread
     Thread(target=run_flask).start()
-
-    # Start Telegram bot polling
-    app.run_polling()
+    # Run Telegram Bot in main thread
+    run_telegram_bot()
