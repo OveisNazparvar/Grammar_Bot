@@ -1,5 +1,5 @@
 python-telegram-bot==20.7
-faster-whisper
+Flask==3.0.3
 requests
-flask
+faster-whisper
 ffmpeg-python
