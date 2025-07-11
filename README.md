@@ -7,7 +7,7 @@ This is a free and open-source **Telegram bot** that automatically:
 - Fully runs on **Railway** for free — no credit card required  
 - Works **inside groups** or in private chat
 
----
+
 
 ## 🧠 Features
 
@@ -18,7 +18,7 @@ This is a free and open-source **Telegram bot** that automatically:
 ✅ Can be hosted for free with ffmpeg support  
 ✅ No manual pinging needed
 
----
+
 
 ## 🚄 Deployment (Free on Railway)
 
@@ -48,7 +48,7 @@ This is a free and open-source **Telegram bot** that automatically:
 
 You can also ask anything from AI by sending plain **text messages**.
 
----
+
 
 ## 🛠 Tech Stack
 
@@ -60,7 +60,7 @@ You can also ask anything from AI by sending plain **text messages**.
 | `Railway`            | Free cloud deployment & hosting           |
 | `ffmpeg`             | Audio conversion (.ogg → .wav)            |
 
----
+
 
 ## 🙌 Credits
 
@@ -69,7 +69,7 @@ You can also ask anything from AI by sending plain **text messages**.
 - [Railway](https://railway.app) – Free and easy deployment  
 - Inspired by language learners and educators worldwide 🌍
 
----
+
 
 ## 📬 Contact
 
