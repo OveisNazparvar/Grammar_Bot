@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: grammar-bot
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    envVars:
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: BOT_TOKEN
+        sync: false
