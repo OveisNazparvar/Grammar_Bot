@@ -7,6 +7,6 @@ services:
     startCommand: python3 main.py
     env:
       - name: OPENROUTER_API_KEY
-      - name: TELEGRAM_BOT_TOKEN
+      - name: BOT_TOKEN
     ports:
       - 8080
