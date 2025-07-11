@@ -1,0 +1,8 @@
+name: your-project-name
+services:
+  - name: web
+    image: python:3.10
+    command: python3 main.py
+    ports:
+      - port: 8080
+        expose: true
