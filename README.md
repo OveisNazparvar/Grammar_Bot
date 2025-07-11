@@ -36,17 +36,6 @@ This is a free and open-source **Telegram bot** that automatically:
 ✅ Once deployed, your bot starts running automatically and handles messages in real-time!
 
 
-
-### 📦 Fork This Repository
-
-Click the "Fork" button on the top right, or clone this repo:
-```bash
-git clone https://github.com/YOUR_USERNAME/telegram-grammar-bot.git
-‍‍‍```
-
-
----
-
 ## 🤖 Usage
 
 - Add the bot to a **Telegram group**
