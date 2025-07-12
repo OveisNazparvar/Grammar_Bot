@@ -10,10 +10,10 @@ API_KEY = os.environ.get("OPENROUTER_API_KEY")
 if not API_KEY:
     raise ValueError("❌ 'OPENROUTER_API_KEY' is missing from environment variables!")
 
-BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")  # از محیط Railway می‌گیریم
+BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN") 
 
 # ========== 🧠 Whisper Model ==========
-whisper_model = WhisperModel("medium.en", compute_type="int8")
+whisper_model = WhisperModel("small.en", compute_type="int8")
 
 # ========== 🤖 Initialize Telegram Bot ==========
 app = ApplicationBuilder().token(BOT_TOKEN).build()
